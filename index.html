@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#173f45" />
+    <title>Plasti Figures · Catálogo digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <div class="top-fixed">
+        <header class="masthead">
+          <div class="brand" aria-label="Catalogo BOTR's">Catalogo <b>BOTR's</b></div>
+          <a class="source-link" href="catalogo-plastiborracha.pdf" target="_blank" rel="noreferrer">Abrir catálogo original <span>↗</span></a>
+        </header>
+
+        <section class="toolbar" aria-label="Filtros do catálogo">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Pesquisar referência ou medida..." autocomplete="off" /></label>
+          <label class="select-box"><span>Ordenar</span><select id="sort"><option value="page">Ordem do catálogo</option><option value="reference-asc">Referência A–Z</option><option value="reference-desc">Referência Z–A</option><option value="family-asc">Família A–Z</option><option value="family-desc">Família Z–A</option><option value="exterior-asc">Diâmetro exterior ↑</option><option value="exterior-desc">Diâmetro exterior ↓</option><option value="interior-asc">Diâmetro interior ↑</option><option value="interior-desc">Diâmetro interior ↓</option><option value="height-asc">Altura ↑</option><option value="height-desc">Altura ↓</option></select></label>
+          <button id="filter-button" class="filter-button" type="button" aria-haspopup="dialog" aria-controls="filter-dialog" aria-expanded="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16l-6.2 7.1v5.2l-3.6 1.8v-7z" /></svg><span>Filtros</span></button>
+        </section>
+
+        <section class="status-row"><p id="status">A preparar catálogo…</p><p id="count"></p></section>
+      </div>
+      <section id="catalog" class="table-wrap" aria-live="polite"></section>
+      <p id="empty" class="empty" hidden>Não encontrámos referências para esta pesquisa.</p>
+      <dialog id="filter-dialog" aria-labelledby="filter-title">
+        <form id="filter-form" method="dialog">
+          <div class="dialog-head"><div><p class="eyebrow">Pesquisa avançada</p><h2 id="filter-title">Filtrar catálogo</h2></div><button id="close-filter" class="close-button" type="button" aria-label="Fechar filtros">×</button></div>
+          <div class="filter-fields">
+            <div class="filter-group" data-filter="family"><div class="filter-label"><span>Família</span></div><div class="family-picker"><input id="family-search" type="search" placeholder="Procurar família..." autocomplete="off" /><div id="family-options" class="family-options"></div><div id="selected-families" class="selected-families"></div></div></div>
+            <div class="filter-group" data-filter="exterior"><div class="filter-label"><span>Diâmetro exterior</span><button class="add-filter" type="button">+ Adicionar intervalo</button></div><div class="range-list"><div class="range-fields"><input class="filter-min" type="number" step="any" placeholder="Mínimo" /><input class="filter-max" type="number" step="any" placeholder="Máximo" /></div></div></div>
+            <div class="filter-group" data-filter="interior"><div class="filter-label"><span>Diâmetro interior</span><button class="add-filter" type="button">+ Adicionar intervalo</button></div><div class="range-list"><div class="range-fields"><input class="filter-min" type="number" step="any" placeholder="Mínimo" /><input class="filter-max" type="number" step="any" placeholder="Máximo" /></div></div></div>
+            <div class="filter-group" data-filter="height"><div class="filter-label"><span>Altura</span><button class="add-filter" type="button">+ Adicionar intervalo</button></div><div class="range-list"><div class="range-fields"><input class="filter-min" type="number" step="any" placeholder="Mínimo" /><input class="filter-max" type="number" step="any" placeholder="Máximo" /></div></div></div>
+          </div>
+          <div class="dialog-actions"><button id="clear-filters" class="clear-button" type="button">Limpar filtros</button><button class="apply-button" type="submit">Aplicar filtros</button></div>
+        </form>
+      </dialog>
+      <footer><span>PLASTI FIGURES / CATÁLOGO DIGITAL</span><span id="footer-source">Fonte: catálogo fornecido pela Plasti Borracha</span></footer>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
