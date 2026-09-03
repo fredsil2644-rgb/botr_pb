@@ -10,6 +10,7 @@ const filterDialog = document.querySelector('#filter-dialog');
 const filterForm = document.querySelector('#filter-form');
 let records = [];
 let selectedFamilies = [];
+const familiesWithoutImages = new Set(['110', '115', '123', '196', '269', '280', '281', '282', '424', '448']);
 
 function dimensions(text) {
   const matches = text.match(/\b\d{1,4}(?:[,.]\d{1,2})?\s*(?:x|×|X)\s*\d{1,4}(?:[,.]\d{1,2})?(?:\s*(?:x|×|X)\s*\d{1,4}(?:[,.]\d{1,2})?)?\s*(?:mm|cm)?\b/gi);
@@ -62,6 +63,11 @@ function dimensionParts(text) {
   const values = text.replace(/\b\d{5}(?:-[A-Z])?\b/g, '').match(/\b\d{1,3}(?:[,.]\d{1,2})?\b/g) || [];
   return values.slice(0, 3).map(value => value.replace(',', '.'));
 }
+function familyMarkup(family) {
+  const safeFamily = escapeHtml(family);
+  if (!/^\d{3}$/.test(family) || familiesWithoutImages.has(family)) return safeFamily;
+  return `<span class="family-hover">${safeFamily}<span class="family-preview"><img src="./img/familias/${safeFamily}.jpg" alt="Imagem da família ${safeFamily}" loading="lazy"></span></span>`;
+}
 function familyFor(items, ref) {
   const start = items.indexOf(ref);
   const before = items.slice(0, start);
@@ -95,7 +101,7 @@ function render() {
   filtered.sort(sorters[sort.value] || ((a, b) => a.page - b.page));
   count.textContent = `${filtered.length} ${filtered.length === 1 ? 'registo' : 'registos'}`;
   empty.hidden = filtered.length !== 0;
-  catalog.innerHTML = `<table><thead><tr><th>Referência</th><th>Família</th><th>Diâmetro exterior</th><th>Diâmetro interior</th><th>Altura</th></tr></thead><tbody>${filtered.map(item => `<tr><td data-label="Referência"><strong>${escapeHtml(item.reference)}</strong></td><td data-label="Família">${escapeHtml(item.family)}</td><td data-label="Diâmetro exterior">${escapeHtml(item.measurements[0] || '—')}</td><td data-label="Diâmetro interior">${escapeHtml(item.measurements[1] || '—')}</td><td data-label="Altura">${escapeHtml(item.measurements[2] || '—')}</td></tr>`).join('')}</tbody></table>`;
+  catalog.innerHTML = `<table><thead><tr><th>Referência</th><th>Família</th><th>Diâmetro exterior</th><th>Diâmetro interior</th><th>Altura</th></tr></thead><tbody>${filtered.map(item => `<tr><td data-label="Referência"><strong>${escapeHtml(item.reference)}</strong></td><td data-label="Família">${familyMarkup(item.family)}</td><td data-label="Diâmetro exterior">${escapeHtml(item.measurements[0] || '—')}</td><td data-label="Diâmetro interior">${escapeHtml(item.measurements[1] || '—')}</td><td data-label="Altura">${escapeHtml(item.measurements[2] || '—')}</td></tr>`).join('')}</tbody></table>`;
 }
 
 async function loadCatalog() {
