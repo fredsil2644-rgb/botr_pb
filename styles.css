@@ -47,6 +47,10 @@ tbody tr { animation: rise .35s both; }
 tbody tr:hover { background: #f8faf8; }
 td { color: var(--ink); font-size: 14px; }
 td strong { color: var(--coral); font-family: 'Space Grotesk'; }
+.family-hover { position: relative; display: inline-block; color: var(--coral); cursor: help; }
+.family-preview { display: none; position: absolute; z-index: 5; top: 50%; left: calc(100% + 14px); width: 300px; height: 238px; padding: 8px; transform: translateY(-50%); background: var(--white); border: 1px solid var(--line); box-shadow: 0 12px 28px rgba(23, 63, 69, .2); pointer-events: none; }
+.family-preview img { display: block; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.family-hover:hover .family-preview, .family-hover:focus-within .family-preview { display: block; }
 .card { min-width: 0; background: var(--white); border: 1px solid var(--line); animation: rise .45s both; }
 .card-image { aspect-ratio: 1.26; background: #e9efeb; overflow: hidden; display: grid; place-items: center; }
 .card-image img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
